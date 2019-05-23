@@ -17,7 +17,6 @@ const platform = new H.service.Platform({
 
 document.getElementById("r-root").innerHTML = `
 <div id="r-nav-bar">HISTORIAS</div>
-<div id="r-here-map"></div>
 <div id="r-story"></div>
 `
 
@@ -132,39 +131,21 @@ getStories()
     })
     .then(data => {
         console.log(data)
-        let icon = new H.map.Icon('img/marker.png');
-        let marker = new H.map.Marker({ lat: data[indice].startCoordinates.lat, lng: data[indice].startCoordinates.lng }, { icon: icon });
-        map.addObject(marker);
         document.getElementById("r-story").innerHTML = `
-        <div id="r-button">A ${data[indice].time} min de tí</div>
-        <img id="r-story-img" src=${data[indice].img}>
-        <div id="r-title">${data[indice].title.toUpperCase()}</div>
-        <img id="r-right-arrow" src="./img/arrowright.png">
-        <img id="r-left-arrow" src="./img/arrowleft.png">
-        <div id="r-info">
-        <div id="r-address"><img id="r-location-minimarker" src="./img/minimarker2.png">DIRECCIÓN</div>
-        <div id="r-genre">${data[indice].genre}</div>
-        <div id="r-duration"><img src="./img/clock2.png" id="r-location-minimarker">${data[indice].duration}</div>
-        <div id="r-summary">${data[indice].summary}</div>
-        </div>
+            <img id="a-cap-img" src=${"./img/elAngel.png"}>
+                <div id="a-info">
+                <div class="a-circulo">${data[indice].chapters.ch1.title.charAt(9)}</div>
+                <div id="a-title-cap"> ${data[indice].chapters.ch1.title} </div>
+                <img id="a-play-stop" src=${"./img/stop.png"}>
+                <img id="a-play-stop" src=${"./img/play.png"}>
+                <hr>
+                <div id="a-content">${data[indice].chapters.ch1.content}</div>
+                <img id="a-arrow-down" src=${"./img/arrowdown.png"}>
+                <div id="a-button">Opción 1</div>
+                <div id="a-button">Opción 2</div>
+            </div>
         `
-        document.getElementById("r-right-arrow").addEventListener("click", () => {
-            if (data.length === indice+1) {
-                return;
-            } else {
-                map.removeObject(marker)
-                getMeAStory(indice+1)
-            }
-        })
-
-        document.getElementById("r-left-arrow").addEventListener("click", () => {
-            if (indice === 0) {
-                return;
-            } else {
-                map.removeObject(marker)
-                getMeAStory(indice-1)
-            }
-        })
+   
     })
     .catch(error => {
         console.log(error)
